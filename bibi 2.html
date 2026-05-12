@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Mahalia Graduation Invite</title>
+
+  <style>
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:radial-gradient(circle at top,#fff7fb,#ffe4ec 45%,#fff8ef);
+      font-family:Georgia, "Times New Roman", serif;
+      overflow:auto;
+      padding:40px 0;
+    }
+
+    .scene{
+      position:relative;
+      width:390px;
+      height:760px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    #envelope{
+      width:360px;
+      height:240px;
+      position:absolute;
+      bottom:70px;
+      cursor:pointer;
+      z-index:20;
+      transition:1s ease;
+    }
+
+    .envelope-body{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(145deg,#f6c7d5,#eaa9bb);
+      border-radius:22px;
+      box-shadow:0 20px 50px rgba(128,57,82,0.28);
+      overflow:hidden;
+      border:1px solid #f7d6df;
+    }
+
+    .back-flap{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:#f9d6df;
+      clip-path:polygon(0 0,100% 0,50% 58%);
+      z-index:1;
+    }
+
+    .left-fold{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:#efb5c5;
+      clip-path:polygon(0 0,50% 52%,0 100%);
+      z-index:3;
+    }
+
+    .right-fold{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:#f3bfcd;
+      clip-path:polygon(100% 0,50% 52%,100% 100%);
+      z-index:3;
+    }
+
+    .front-fold{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:linear-gradient(160deg,#f7cad8,#eaa9bb);
+      clip-path:polygon(0 100%,50% 45%,100% 100%);
+      z-index:4;
+    }
+
+    .top-flap{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:linear-gradient(160deg,#f4b6c7,#e99ab1);
+      clip-path:polygon(0 0,100% 0,50% 62%);
+      transform-origin:top center;
+      transition:1s ease;
+      z-index:8;
+    }
+
+    .wax-seal{
+      width:82px;
+      height:82px;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:linear-gradient(135deg,#fff0a8,#d4a12b,#b98212);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#94445f;
+      font-size:42px;
+      font-weight:bold;
+      z-index:10;
+      box-shadow:0 8px 20px rgba(0,0,0,0.25);
+      border:3px solid rgba(255,255,255,0.55);
+    }
+
+    .open-text{
+      position:absolute;
+      width:100%;
+      bottom:22px;
+      text-align:center;
+      font-size:13px;
+      letter-spacing:3px;
+      color:#7d3f56;
+      font-weight:bold;
+      z-index:12;
+    }
+
+    #card{
+      position:absolute;
+      top:70px;
+      width:340px;
+      min-height:500px;
+      background:linear-gradient(180deg,#ffffff,#fff9fb);
+      border-radius:28px;
+      padding:38px 26px 30px;
+      text-align:center;
+      border:2px solid #d9ad4f;
+      box-shadow:0 22px 55px rgba(111,50,72,0.25);
+      opacity:0;
+      transform:translateY(80px) scale(0.95);
+      transition:1.25s ease;
+      z-index:5;
+      pointer-events:none;
+    }
+
+    #card::before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      border:1px solid #efd18a;
+      border-radius:22px;
+      pointer-events:none;
+    }
+
+    .feather-pen{
+      position:absolute;
+      top:-35px;
+      right:-45px;
+      font-size:76px;
+      transform:rotate(25deg);
+      opacity:0;
+      transition:1.2s ease 0.7s;
+      filter:drop-shadow(0 10px 10px rgba(0,0,0,0.18));
+      z-index:900;
+    }
+
+    .title{
+      color:#bf6f86;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      font-size:12px;
+      font-weight:bold;
+      margin-bottom:14px;
+    }
+
+    .grad-icon{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .name{
+      font-size:44px;
+      color:#8f3d58;
+      margin:0 0 18px;
+      line-height:1.08;
+      font-weight:normal;
+    }
+
+    .divider{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      color:#d4a12b;
+      margin:14px 0 18px;
+    }
+
+    .divider span{
+      width:58px;
+      height:1px;
+      background:#d4a12b;
+      display:block;
+    }
+
+    .message{
+      color:#6b4f57;
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .info-box{
+      background:#fff1f5;
+      border:1px solid #e8bdca;
+      border-radius:20px;
+      padding:18px;
+      margin-top:20px;
+    }
+
+    .info-box h2{
+      margin:0;
+      color:#7d3f56;
+      font-size:27px;
+    }
+
+    .info-box p{
+      margin:10px 0 0;
+      color:#6b4f57;
+      font-style:italic;
+    }
+
+    .rsvp{
+      margin-top:20px;
+      color:#7d3f56;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .music{
+      margin-top:14px;
+      color:#bf6f86;
+      font-size:18px;
+    }
+
+    .confetti{
+      position:absolute;
+      width:12px;
+      height:18px;
+      opacity:1;
+      z-index:9999;
+      border-radius:3px;
+      pointer-events:none;
+    }
+
+    .scene.opened #card{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      z-index:500;
+    }
+
+    .scene.opened .top-flap{
+      transform:rotateX(180deg);
+      opacity:0.35;
+    }
+
+    .scene.opened .wax-seal,
+    .scene.opened .open-text{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .scene.opened .feather-pen{
+      opacity:1;
+      transform:rotate(15deg) translateY(4px);
+    }
+
+    .scene.opened #envelope{
+      opacity:0;
+      transform:translateY(120px) scale(0.7);
+      pointer-events:none;
+    }
+
+    @keyframes burst{
+
+      0%{
+        opacity:1;
+        transform:translate(0,0) rotate(0deg) scale(1);
+      }
+
+      100%{
+        opacity:0;
+        transform:translate(var(--x), var(--y)) rotate(760deg) scale(0.8);
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="scene">
+
+  <div id="card">
+
+    <div class="feather-pen">🪶</div>
+
+    <div class="grad-icon">Graduation</div>
+
+    <h1 class="name">
+      Mahalia<br>
+      Norgaisse
+    </h1>
+
+    <div class="title">
+      Graduation Dinner
+    </div>
+
+    <div class="divider">
+      <span></span>
+      *
+      <span></span>
+    </div>
+
+    <p class="message">
+      Please join us for an elegant evening honoring Mahalia's graduation,
+      hard work, and beautiful new chapter ahead.
+    </p>
+
+    <div class="info-box">
+
+      <h2>6:30 PM</h2>
+
+      <p>
+        Location to be announced
+      </p>
+
+    </div>
+
+    <div class="rsvp">
+
+      * RSVP *<br><br>
+
+      Please RSVP to<br>
+
+      <strong>754-273-2860</strong><br>
+
+      or<br>
+
+      <strong>954-451-8026</strong>
+
+    </div>
+
+    <div class="music">
+      Graduation Music
+    </div>
+
+  </div>
+
+  <div id="envelope">
+
+    <div class="envelope-body">
+
+      <div class="back-flap"></div>
+      <div class="top-flap"></div>
+      <div class="left-fold"></div>
+      <div class="right-fold"></div>
+      <div class="front-fold"></div>
+
+      <div class="wax-seal">M</div>
+
+      <div class="open-text">
+        CLICK TO OPEN
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<audio id="violinMusic">
+  <source src="Vitamin C - Graduation (Friends Forever) [Official Music Video].mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const envelope = document.getElementById("envelope");
+
+const scene = document.querySelector(".scene");
+
+const violinMusic = document.getElementById("violinMusic");
+
+envelope.addEventListener("click", function(){
+
+  if(scene.classList.contains("opened")) return;
+
+  scene.classList.add("opened");
+
+  violinMusic.volume = 0.45;
+
+  violinMusic.play();
+
+  for(let i = 0; i < 85; i++){
+
+    const confetti = document.createElement("div");
+
+    confetti.className = "confetti";
+
+    const colors = [
+      "#f3a6bb",
+      "#d4a12b",
+      "#ffffff",
+      "#8f3d58",
+      "#ffd6e2",
+      "#f7c948"
+    ];
+
+    confetti.style.background =
+      colors[Math.floor(Math.random() * colors.length)];
+
+    confetti.style.left = "190px";
+
+    confetti.style.bottom = "300px";
+
+    confetti.style.setProperty(
+      "--x",
+      `${Math.random() * 520 - 260}px`
+    );
+
+    confetti.style.setProperty(
+      "--y",
+      `${Math.random() * -390 - 90}px`
+    );
+
+    confetti.style.animation =
+      `burst ${1.4 + Math.random()}s ease-out forwards`;
+
+    confetti.style.animationDelay =
+      `${Math.random() * 0.25}s`;
+
+    scene.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 2600);
+  }
+
+});
+
+</script>
+
+</body>
+
+</html>
+
